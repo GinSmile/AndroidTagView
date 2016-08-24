@@ -1,12 +1,16 @@
 package com.ginsmile.androidtagview;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +19,25 @@ import java.util.List;
  * Created by xujin on 16/08/24.
  */
 public class HotTagView extends ViewGroup {
+    private Paint mTextPaint;//字
+    private int mTextPaintColor = Color.BLACK;
+    private Paint mBackgroudPaint;//背景
+    private int mBackgroudPaintColor = Color.LTGRAY;
+    private Paint mLinePaint;//外围线条
+    private int mLinePaintColor = Color.BLUE;
+
+    private int mTextViewPaddingLeft = 20;
+    private int mTextViewPaddingRight = 20;
+    private int mTextViewPaddingTop = 10;
+    private int mTextViewPaddingBottom = 10;
+
+    private int mTextViewMarginLeft = 10;
+    private int mTextViewMarginRight = 10;
+    private int mTextViewMarginTop = 10;
+    private int mTextViewMarginBottom = 10;
+
+    private List<String> tags = new ArrayList<String>();
+
     public HotTagView(Context context) {
         super(context,null);
     }
@@ -25,6 +48,7 @@ public class HotTagView extends ViewGroup {
 
     public HotTagView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
     }
 
     @Override
@@ -187,20 +211,99 @@ public class HotTagView extends ViewGroup {
         return new MarginLayoutParams(getContext(), attrs);
     }
 
+
+
+    private void init(){
+//        mTextViewPaddingLeft = 10;
+//        mTextViewPaddingRight = 10;
+//        mTextViewPaddingTop = 10;
+//        mTextViewPaddingBottom = 10;
+//
+//        mTextViewMarginLeft = 10;
+//        mTextViewMarginRight = 10;
+//        mTextViewMarginTop = 10;
+//        mTextViewMarginBottom = 10;
+//
+//        Log.v("TAG:","DONE....");
+    }
+
     public void setTags(String[] tags){
         for(String tag : tags){
-            TextView tv = new TextView(getContext());
+            TagView tv = new TagView(getContext(),tag);
             MarginLayoutParams lp = new MarginLayoutParams(
                     MarginLayoutParams.WRAP_CONTENT,
                     MarginLayoutParams.WRAP_CONTENT
             );
-            lp.leftMargin = 10;
-            lp.rightMargin = 10;
-            lp.bottomMargin = 10;
-            tv.setText(tag);
-            tv.setPadding(10,10,10,10);
-            tv.setBackgroundColor(Color.LTGRAY);
+            lp.setMargins(mTextViewMarginLeft, mTextViewMarginRight, mTextViewMarginTop, mTextViewMarginBottom);
             this.addView(tv,lp);
+
+            final CharSequence cs = tag;
+            tv.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), cs, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
+    }
+
+
+
+
+
+
+    //小TagView
+    private float rx,ry;
+
+    class TagView extends TextView{
+
+        float top;
+        float left;
+        float right;
+        float bottom;
+
+        public TagView(Context context) {
+            super(context);
+        }
+
+        public TagView(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public TagView(Context context, CharSequence tag) {
+            super(context);
+            setPadding(mTextViewPaddingLeft,mTextViewPaddingTop,  mTextViewPaddingRight, mTextViewPaddingBottom);
+            setGravity(TEXT_ALIGNMENT_CENTER);
+            setText(tag);
+        }
+
+        @Override
+        protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+            super.onSizeChanged(w, h, oldw, oldh);
+            top = 0;
+            left = 0;
+            right = getWidth();
+            bottom = getHeight();
+            rx = 30;
+            ry = 30;
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+            mBackgroudPaint  = new Paint();
+            mBackgroudPaint.setColor(mBackgroudPaintColor);
+            canvas.drawRoundRect(new RectF(left,top,right,bottom),rx,ry,mBackgroudPaint);
+
+            mLinePaint = new Paint();
+            mLinePaint.setColor(mLinePaintColor);
+            mLinePaint.setStyle(Paint.Style.STROKE);
+            mLinePaint.setStrokeWidth(5);
+            mLinePaint.setAntiAlias(true);
+            //canvas.drawRoundRect(new RectF(left,top,right,bottom),rx,ry,mLinePaint);
+            super.onDraw(canvas);
+        }
+
+
+
     }
 }
