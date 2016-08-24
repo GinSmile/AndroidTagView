@@ -39,6 +39,7 @@ public class HotTagView extends ViewGroup {
     private float mTextViewMarginBottom;
 
     private List<String> tags = new ArrayList<String>();
+    private List<TagView> tagViews = new ArrayList<TagView>();//返回所有的TagView
 
     //小TagView
     private float rx = 20,ry = 20;
@@ -381,6 +382,7 @@ public class HotTagView extends ViewGroup {
                     (int)mTextViewMarginRight,
                     (int)mTextViewMarginBottom);
             this.addView(tv,lp);
+            tagViews.add(tv);
 
             final CharSequence cs = tag;
             tv.setOnClickListener(new OnClickListener() {
@@ -394,6 +396,10 @@ public class HotTagView extends ViewGroup {
     }
 
 
+    public List<TagView> getTagViews(){
+        return tagViews;
+    }
+
 
     class TagView extends TextView{
 
@@ -401,6 +407,17 @@ public class HotTagView extends ViewGroup {
         float left;
         float right;
         float bottom;
+
+        int mBackgroudPaintColor;
+        Paint mBackgroudPaint;
+
+        int mLinePaintColor;
+        Paint mLinePaint;
+
+        float mTextSize;
+        int mTextColor;
+
+        float mStrokeWidth;
 
         public TagView(Context context) {
             super(context);
@@ -412,6 +429,16 @@ public class HotTagView extends ViewGroup {
 
         public TagView(Context context, CharSequence tag) {
             super(context);
+
+            //初始化
+            mBackgroudPaintColor = HotTagView.this.mBackgroudPaintColor;
+            mBackgroudPaint = HotTagView.this.mBackgroudPaint;
+            mLinePaint = HotTagView.this.mLinePaint;
+            mLinePaintColor = HotTagView.this.mLinePaintColor;
+            mStrokeWidth = HotTagView.this.mStrokeWidth;
+            mTextSize = HotTagView.this.mTextSize;
+            mTextColor = HotTagView.this.mTextColor;
+
             TagView.this.setPadding((int)mTextViewPaddingLeft,(int)mTextViewPaddingTop,
                 (int)mTextViewPaddingRight, (int)mTextViewPaddingBottom);
             setGravity(TEXT_ALIGNMENT_CENTER);
@@ -446,6 +473,30 @@ public class HotTagView extends ViewGroup {
             canvas.drawRoundRect(rectF,rx,ry,mLinePaint);
             super.onDraw(canvas);
         }
+
+        public void setmBackgroudPaintColor(int mBackgroudPaintColor) {
+            this.mBackgroudPaintColor = mBackgroudPaintColor;
+            invalidate();
+        }
+
+        public void setmLinePaintColor(int mLinePaintColor) {
+            this.mLinePaintColor = mLinePaintColor;
+            invalidate();
+
+        }
+
+        public void setmStrokeWidth(float mStrokeWidth) {
+            this.mStrokeWidth = mStrokeWidth;
+            invalidate();
+        }
+
+        public void setmTextColor(int mTextColor) {
+            this.mTextColor = mTextColor;
+            invalidate();
+        }
+
+
+
 
 
 

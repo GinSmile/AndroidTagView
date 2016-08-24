@@ -6,7 +6,7 @@ android的云标签。
 参考了网上的几个开源项目。
 
             
-<img src="./screenshot/3.png" width = "240" height = "430" alt="simple2" />
+<img src="./screenshot/4.png" width = "240" height = "430" alt="simple2" />
 
 
 

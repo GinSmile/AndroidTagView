@@ -62,4 +62,19 @@
         app:textview_margin="5dp"
         app:textview_padding="10dp">
     </com.ginsmile.androidtagview.HotTagView>
+
+    <com.ginsmile.androidtagview.HotTagView
+        android:id="@+id/htv4"
+        android:layout_below="@id/htv3"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text_size="7sp"
+        app:text_color="#FFFFFF"
+        app:stroke_width="3dp"
+        app:line_color="#d1d1d1"
+        app:background_color="#FFFFFF"
+        app:textview_margin="3dp"
+        app:textview_padding="6dp">
+    </com.ginsmile.androidtagview.HotTagView>
 </RelativeLayout>
