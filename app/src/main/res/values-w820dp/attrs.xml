@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HotTagView">
+        <attr name="background_color" format="color" />
+        <attr name="line_color" format="color" />
+        <attr name="stroke_width" format="dimension" />
+
+        <attr name="text_size" format="dimension"></attr>
+        <attr name="text_color" format="color"></attr>
+
+        <attr name="textview_margin_left" format="dimension"></attr>
+        <attr name="textview_margin_right" format="dimension"></attr>
+        <attr name="textview_margin_top" format="dimension"></attr>
+        <attr name="textview_margin_bottom" format="dimension"></attr>
+        <attr name="textview_margin" format="dimension"></attr>
+
+        <attr name="textview_padding_left" format="dimension"></attr>
+        <attr name="textview_padding_right" format="dimension"></attr>
+        <attr name="textview_padding_top" format="dimension"></attr>
+        <attr name="textview_padding_bottom" format="dimension"></attr>
+        <attr name="textview_padding" format="dimension"></attr>
+    </declare-styleable>
+</resources>

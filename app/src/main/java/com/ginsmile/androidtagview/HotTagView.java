@@ -1,6 +1,7 @@
 package com.ginsmile.androidtagview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -19,36 +20,190 @@ import java.util.List;
  * Created by xujin on 16/08/24.
  */
 public class HotTagView extends ViewGroup {
-    private Paint mTextPaint;//字
-    private int mTextPaintColor = Color.BLACK;
     private Paint mBackgroudPaint;//背景
     private int mBackgroudPaintColor = Color.LTGRAY;
     private Paint mLinePaint;//外围线条
     private int mLinePaintColor = Color.BLUE;
 
-    private int mTextViewPaddingLeft = 20;
-    private int mTextViewPaddingRight = 20;
-    private int mTextViewPaddingTop = 10;
-    private int mTextViewPaddingBottom = 10;
+    private float mTextSize;
+    private int mTextColor = Color.WHITE;
 
-    private int mTextViewMarginLeft = 10;
-    private int mTextViewMarginRight = 10;
-    private int mTextViewMarginTop = 10;
-    private int mTextViewMarginBottom = 10;
+    private float mTextViewPaddingLeft;
+    private float mTextViewPaddingRight;
+    private float mTextViewPaddingTop;
+    private float mTextViewPaddingBottom;
+
+    private float mTextViewMarginLeft;
+    private float mTextViewMarginRight;
+    private float mTextViewMarginTop;
+    private float mTextViewMarginBottom;
 
     private List<String> tags = new ArrayList<String>();
 
+    //小TagView
+    private float rx = 20,ry = 20;
+    private float mStrokeWidth = 5;
+
+
+    public int getmBackgroudPaintColor() {
+        return mBackgroudPaintColor;
+    }
+
+    public void setmBackgroudPaintColor(int mBackgroudPaintColor) {
+        this.mBackgroudPaintColor = mBackgroudPaintColor;
+    }
+
+    public int getmLinePaintColor() {
+        return mLinePaintColor;
+    }
+
+    public void setmLinePaintColor(int mLinePaintColor) {
+        this.mLinePaintColor = mLinePaintColor;
+    }
+
+    public float getmStrokeWidth() {
+        return mStrokeWidth;
+    }
+
+    public void setmStrokeWidth(float mStrokeWidth) {
+        this.mStrokeWidth = mStrokeWidth;
+    }
+
+    public float getmTextViewMarginBottom() {
+        return mTextViewMarginBottom;
+    }
+
+    public void setmTextViewMarginBottom(float mTextViewMarginBottom) {
+        this.mTextViewMarginBottom = mTextViewMarginBottom;
+    }
+
+    public float getmTextViewMarginLeft() {
+        return mTextViewMarginLeft;
+    }
+
+    public void setmTextViewMarginLeft(float mTextViewMarginLeft) {
+        this.mTextViewMarginLeft = mTextViewMarginLeft;
+    }
+
+    public float getmTextViewMarginRight() {
+        return mTextViewMarginRight;
+    }
+
+    public void setmTextViewMarginRight(float mTextViewMarginRight) {
+        this.mTextViewMarginRight = mTextViewMarginRight;
+    }
+
+    public float getmTextViewMarginTop() {
+        return mTextViewMarginTop;
+    }
+
+    public void setmTextViewMarginTop(float mTextViewMarginTop) {
+        this.mTextViewMarginTop = mTextViewMarginTop;
+    }
+
+    public float getmTextViewPaddingBottom() {
+        return mTextViewPaddingBottom;
+    }
+
+    public void setmTextViewPaddingBottom(float mTextViewPaddingBottom) {
+        this.mTextViewPaddingBottom = mTextViewPaddingBottom;
+    }
+
+    public float getmTextViewPaddingLeft() {
+        return mTextViewPaddingLeft;
+    }
+
+    public void setmTextViewPaddingLeft(float mTextViewPaddingLeft) {
+        this.mTextViewPaddingLeft = mTextViewPaddingLeft;
+    }
+
+    public float getmTextViewPaddingRight() {
+        return mTextViewPaddingRight;
+    }
+
+    public void setmTextViewPaddingRight(float mTextViewPaddingRight) {
+        this.mTextViewPaddingRight = mTextViewPaddingRight;
+    }
+
+    public float getmTextViewPaddingTop() {
+        return mTextViewPaddingTop;
+    }
+
+    public void setmTextViewPaddingTop(float mTextViewPaddingTop) {
+        this.mTextViewPaddingTop = mTextViewPaddingTop;
+    }
+
+    public float getRx() {
+        return rx;
+    }
+
+    public void setRx(float rx) {
+        this.rx = rx;
+    }
+
+    public float getRy() {
+        return ry;
+    }
+
+    public void setRy(float ry) {
+        this.ry = ry;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
     public HotTagView(Context context) {
-        super(context,null);
+        super(context);
     }
 
     public HotTagView(Context context, AttributeSet attrs) {
-        super(context, attrs, 0);
+        super(context, attrs);
+        init(context, attrs);
     }
 
     public HotTagView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(context, attrs);
+    }
+
+    public void init(Context context, AttributeSet attrs){
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.HotTagView);
+        mBackgroudPaintColor = ta.getColor(R.styleable.HotTagView_background_color, Color.LTGRAY);
+        mLinePaintColor = ta.getColor(R.styleable.HotTagView_line_color, Color.LTGRAY);
+        mStrokeWidth = ta.getDimension(R.styleable.HotTagView_stroke_width, 3);
+
+        mTextViewMarginLeft =  ta.getDimension(R.styleable.HotTagView_textview_margin_left, 2);
+        mTextViewMarginRight = ta.getDimension(R.styleable.HotTagView_textview_margin_right, 2);
+        mTextViewMarginTop =  ta.getDimension(R.styleable.HotTagView_textview_margin_top, 2);
+        mTextViewMarginBottom = ta.getDimension(R.styleable.HotTagView_textview_margin_bottom, 2);
+
+        mTextViewPaddingLeft =  ta.getDimension(R.styleable.HotTagView_textview_padding_left, 2);
+        mTextViewPaddingRight =  ta.getDimension(R.styleable.HotTagView_textview_padding_right, 2);
+        mTextViewPaddingTop =  ta.getDimension(R.styleable.HotTagView_textview_padding_top, 2);
+        mTextViewPaddingBottom =  ta.getDimension(R.styleable.HotTagView_textview_padding_bottom, 2);
+
+        mTextColor = ta.getColor(R.styleable.HotTagView_text_color, Color.WHITE);
+        mTextSize = ta.getDimension(R.styleable.HotTagView_text_size, 6);
+
+        float mTextViewPadding = ta.getDimension(R.styleable.HotTagView_textview_padding, 0);
+        if(mTextViewPadding != 0){
+            mTextViewPaddingLeft = mTextViewPadding ;
+            mTextViewPaddingRight = mTextViewPadding;
+            mTextViewPaddingBottom = mTextViewPadding;
+            mTextViewPaddingTop = mTextViewPadding;
+        }
+
+        float mTextViewMargin = ta.getDimension(R.styleable.HotTagView_textview_margin, 0);
+        if(mTextViewMargin != 0){
+            mTextViewMarginLeft = mTextViewMargin;
+            mTextViewMarginRight = mTextViewMargin;
+            mTextViewMarginTop = mTextViewMargin;
+            mTextViewMarginBottom = mTextViewMargin;
+        }
+
+        ta.recycle();
+
     }
 
     @Override
@@ -212,29 +367,19 @@ public class HotTagView extends ViewGroup {
     }
 
 
-
-    private void init(){
-//        mTextViewPaddingLeft = 10;
-//        mTextViewPaddingRight = 10;
-//        mTextViewPaddingTop = 10;
-//        mTextViewPaddingBottom = 10;
-//
-//        mTextViewMarginLeft = 10;
-//        mTextViewMarginRight = 10;
-//        mTextViewMarginTop = 10;
-//        mTextViewMarginBottom = 10;
-//
-//        Log.v("TAG:","DONE....");
-    }
-
-    public void setTags(String[] tags){
+    public void setTags(ArrayList<String> tags){
         for(String tag : tags){
             TagView tv = new TagView(getContext(),tag);
+            tv.setTextColor(mTextColor);
+            tv.setTextSize(mTextSize);
             MarginLayoutParams lp = new MarginLayoutParams(
                     MarginLayoutParams.WRAP_CONTENT,
                     MarginLayoutParams.WRAP_CONTENT
             );
-            lp.setMargins(mTextViewMarginLeft, mTextViewMarginRight, mTextViewMarginTop, mTextViewMarginBottom);
+            lp.setMargins((int)mTextViewMarginLeft,
+                    (int)mTextViewMarginTop,
+                    (int)mTextViewMarginRight,
+                    (int)mTextViewMarginBottom);
             this.addView(tv,lp);
 
             final CharSequence cs = tag;
@@ -245,15 +390,10 @@ public class HotTagView extends ViewGroup {
                 }
             });
         }
+        invalidate();
     }
 
 
-
-
-
-
-    //小TagView
-    private float rx,ry;
 
     class TagView extends TextView{
 
@@ -272,7 +412,8 @@ public class HotTagView extends ViewGroup {
 
         public TagView(Context context, CharSequence tag) {
             super(context);
-            setPadding(mTextViewPaddingLeft,mTextViewPaddingTop,  mTextViewPaddingRight, mTextViewPaddingBottom);
+            TagView.this.setPadding((int)mTextViewPaddingLeft,(int)mTextViewPaddingTop,
+                (int)mTextViewPaddingRight, (int)mTextViewPaddingBottom);
             setGravity(TEXT_ALIGNMENT_CENTER);
             setText(tag);
         }
@@ -284,22 +425,25 @@ public class HotTagView extends ViewGroup {
             left = 0;
             right = getWidth();
             bottom = getHeight();
-            rx = 30;
-            ry = 30;
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
+            RectF rectF = new RectF(left + mStrokeWidth/2,
+                    top + mStrokeWidth/2,
+                    right - mStrokeWidth/2,
+                    bottom - mStrokeWidth/2);
+
             mBackgroudPaint  = new Paint();
             mBackgroudPaint.setColor(mBackgroudPaintColor);
-            canvas.drawRoundRect(new RectF(left,top,right,bottom),rx,ry,mBackgroudPaint);
+            canvas.drawRoundRect(rectF,rx,ry,mBackgroudPaint);
 
             mLinePaint = new Paint();
             mLinePaint.setColor(mLinePaintColor);
             mLinePaint.setStyle(Paint.Style.STROKE);
-            mLinePaint.setStrokeWidth(5);
+            mLinePaint.setStrokeWidth(mStrokeWidth);
             mLinePaint.setAntiAlias(true);
-            //canvas.drawRoundRect(new RectF(left,top,right,bottom),rx,ry,mLinePaint);
+            canvas.drawRoundRect(rectF,rx,ry,mLinePaint);
             super.onDraw(canvas);
         }
 
