@@ -37,12 +37,14 @@
         app:text_size="8sp"
         app:text_color="#F1FFFF"
         app:stroke_width="3dp"
-        app:line_color="@color/colorPrimary"
+        app:line_color="@color/colorAccent"
         app:background_color="@color/colorPink"
         app:textview_padding_left="8dp"
         app:textview_padding_right="8dp"
-        app:textview_margin_left="1dp"
-        app:textview_margin_right="1dp"
+        app:textview_padding_top="4dp"
+        app:textview_padding_bottom="4dp"
+        app:textview_margin_left="2dp"
+        app:textview_margin_right="2dp"
         app:textview_margin_top="2dp">
     </com.ginsmile.androidtagview.HotTagView>
 
